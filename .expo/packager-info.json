@@ -1,0 +1,9 @@
+{
+  "expoServerPort": 19000,
+  "packagerPort": 19000,
+  "expoServerNgrokUrl": "https://7n-82k.anonymous.car-expo-demo--master.exp.direct",
+  "packagerNgrokUrl": "https://7n-82k.anonymous.car-expo-demo--master.exp.direct",
+  "ngrokPid": 15184,
+  "packagerPid": null,
+  "webpackServerPort": null
+}
