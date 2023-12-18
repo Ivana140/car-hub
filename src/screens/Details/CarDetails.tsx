@@ -21,23 +21,29 @@ const CarDetails = ({route}: {route: any}) => {
         <ImageBackground source={require('../../assets/details_BG.png')} style={styles.imageBackground}>
             <ScrollView style={styles.scrollView}>
                 <View style={styles.infoView}>
-                    <Image style={styles.image} source={item.image}/>
+                    {/* <Image style={styles.image} source={item.image}/> */}
+                    <Image style={styles.image} source={require("../../assets/Cars/grey_car.png")} />
                     <View style={styles.rowView}>
-                        <Text style={styles.carType}>{item.type}</Text>
+                        <Text style={styles.carType}>{item.model}</Text>
                         <View style={styles.heart}>
                             <HeartSvg size={22} color={colors.dark_blue_color}/>
                         </View>
                     </View>
                    {/* TODO: Add Colors here */}
-                   <FlatList 
+                   {/* <FlatList 
                     style={styles.carColors}
                     horizontal={true}
                     data={item.carColors}
                     keyExtractor={(item, index) => index.toString()}
                     renderItem={({item}) => (<ColorComponent key={item.id} selected={item.isSelected} style={{backgroundColor: item.color}}/>)}
-                   />
+                   /> */}
                   <Text style={[styles.itemPadding, styles.featuresTitle]}>Features:</Text>
-                  <Text style={[styles.itemPadding, styles.features]}>{item.features}</Text>
+                  {Object.keys(item).map((key) => (
+                    <Text style={[styles.itemPadding, styles.features]} key={key}>
+                    {`${key}: ${item[key]}`}
+                    </Text>
+                ))}
+                  {/* <Text style={[styles.itemPadding, styles.features]}>{item.features}</Text> */}
                   <View style={styles.rowView}>
                     <Text style={styles.cartPrice}>{item.price}</Text>
                     <CartButton />
