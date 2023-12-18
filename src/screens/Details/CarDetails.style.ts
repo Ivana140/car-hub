@@ -23,8 +23,14 @@ const styles = StyleSheet.create({
         resizeMode: 'contain'
     },
     image: {
-        width: '100%',
-        marginTop: -130
+        // width: '100%',
+        // marginTop: -130
+        flex: 1,
+        width: "100%",
+        height: 150,
+        marginTop: -150,
+        marginBottom: 30,
+        zIndex: 1,
     },
     infoView: {
         flex: 1,

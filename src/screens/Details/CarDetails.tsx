@@ -4,6 +4,7 @@ import { HeartSvg } from "../../assets/svg";
 import colors from "../../constants/Colors";
 import CarItem from "../Wishlist/CarItem/CarItem";
 import styles from "./CarDetails.style";
+// import styles from "../Wishlist/CarItem/CarItem.style";
 import ColorComponent from "./Color";
 import { encode as btoa } from 'base-64';
 
@@ -15,8 +16,10 @@ const CarDetails = ({route}: {route: any}) => {
         const binaryString = item.imageData.data.reduce((acc: any, byte: any) => acc + String.fromCharCode(byte), '');
         const base64String = btoa(binaryString);
         imageUri = `data:${item.imageData.type};base64,${base64String}`;
-        console.log(imageUri);
-      }
+        console.log('IMAGE URIs: ', imageUri);
+        // console.log("asdasdas")
+    }
+    console.log("JOPO{L")
 
     const CartButton = () => {
         return(
