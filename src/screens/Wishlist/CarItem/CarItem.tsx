@@ -5,12 +5,22 @@ import colors from "../../../constants/Colors";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { Car } from "../../../Model/Car";
+import { encode as btoa } from 'base-64';
 
 
 export type RootStaclParamList = {
   CarDetails: {item: Car};
 }
 const CarItem = ({ item }: any) => {
+  let imageUri: string | undefined;
+
+  if (item.imageData && item.imageData.data) {
+    const binaryString = item.imageData.data.reduce((acc: any, byte: any) => acc + String.fromCharCode(byte), '');
+    const base64String = btoa(binaryString);
+    imageUri = `data:${item.imageData.type};base64,${base64String}`;
+    console.log(imageUri);
+  }
+
   const navigation = useNavigation<StackNavigationProp<RootStaclParamList>>()
     return (
       <Pressable onPress={()=> navigation.navigate("CarDetails", item)}>
@@ -18,7 +28,13 @@ const CarItem = ({ item }: any) => {
       <Text style={styles.type}>{item.model}</Text>
 
         {/* <Image style={styles.image} source={item.image} /> */}
-        <Image style={styles.image} source={require("../../../assets/Cars/grey_car.png")} />
+        
+        {imageUri ?
+          <Image style={styles.image} source={{ uri: imageUri }} />
+          :
+          <Image style={styles.image} source={require("../../../assets/Cars/blue_car.png")} />
+        }
+        
         <View style={styles.featuresContainer}>
 
         <Text style={styles.featuresTextContainer}>{item.fuel_type}</Text>

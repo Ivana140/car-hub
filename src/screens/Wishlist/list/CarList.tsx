@@ -13,7 +13,7 @@ const CarList = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get('http://10.0.2.2:3000/cars');
-        console.log(response.data);
+        // console.log(response.data);
         setFilteredCars(response.data)
       } catch (error) {
         // console.error('Error:', error);

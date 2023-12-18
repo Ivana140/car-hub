@@ -11,7 +11,8 @@ export type Car = {
  cylinders: number
  drive:String
  fuel_type:String
- city_mpg:number  
+ city_mpg:number
+ imageData: Buffer  
 }
 
 

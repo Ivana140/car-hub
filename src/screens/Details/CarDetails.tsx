@@ -5,10 +5,18 @@ import colors from "../../constants/Colors";
 import CarItem from "../Wishlist/CarItem/CarItem";
 import styles from "./CarDetails.style";
 import ColorComponent from "./Color";
-
+import { encode as btoa } from 'base-64';
 
 const CarDetails = ({route}: {route: any}) => {
+    let imageUri: string | undefined;
     const item = route.params
+
+    if (item.imageData && item.imageData.data) {
+        const binaryString = item.imageData.data.reduce((acc: any, byte: any) => acc + String.fromCharCode(byte), '');
+        const base64String = btoa(binaryString);
+        imageUri = `data:${item.imageData.type};base64,${base64String}`;
+        console.log(imageUri);
+      }
 
     const CartButton = () => {
         return(
@@ -17,12 +25,18 @@ const CarDetails = ({route}: {route: any}) => {
             </Pressable>
         )
     }
+
     return (
         <ImageBackground source={require('../../assets/details_BG.png')} style={styles.imageBackground}>
             <ScrollView style={styles.scrollView}>
                 <View style={styles.infoView}>
                     {/* <Image style={styles.image} source={item.image}/> */}
-                    <Image style={styles.image} source={require("../../assets/Cars/grey_car.png")} />
+                    {/* <Image style={styles.image} source={{ uri: imageUri }} /> */}
+                    {imageUri ?
+                        <Image style={styles.image} source={{ uri: imageUri }} />
+                        :
+                        <Image style={styles.image} source={require("../../assets/Cars/blue_car.png")} />
+                    }
                     <View style={styles.rowView}>
                         <Text style={styles.carType}>{item.model}</Text>
                         <View style={styles.heart}>
