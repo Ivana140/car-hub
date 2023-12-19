@@ -1,31 +1,38 @@
-import { Image, ImageBackground, Pressable, ScrollView, Text, View } from "react-native";
+import { Image, ImageBackground, Pressable, ScrollView, Text, View, TouchableOpacity, } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { HeartSvg } from "../../assets/svg";
 import colors from "../../constants/Colors";
-import CarItem from "../Wishlist/CarItem/CarItem";
+import CarItem, { RootStaclParamList } from "../Wishlist/CarItem/CarItem";
 import styles from "./CarDetails.style";
+import { useNavigation } from "@react-navigation/native";
+// import styles from "../Wishlist/CarItem/CarItem.style";
 import ColorComponent from "./Color";
 import { encode as btoa } from 'base-64';
+import { StackNavigationProp } from "@react-navigation/stack";
+import { useAuth } from "../../AuthContext";
 
-const CarDetails = ({route}: {route: any}) => {
+const CarDetails = ({route, navigation}: {route: any, navigation: any}) => {
     let imageUri: string | undefined;
     const item = route.params
+    const { isAuthenticated } = useAuth();
 
     if (item.imageData && item.imageData.data) {
         const binaryString = item.imageData.data.reduce((acc: any, byte: any) => acc + String.fromCharCode(byte), '');
         const base64String = btoa(binaryString);
         imageUri = `data:${item.imageData.type};base64,${base64String}`;
-        console.log(imageUri);
-      }
+        // console.log('IMAGE URIs: ', imageUri);
+    }
 
     const CartButton = () => {
         return(
-            <Pressable  style={styles.addToCart}  onPress={() => ({})}>
+            <Pressable  style={styles.addToCart}  onPress={() => navigation.navigate("Rent", item)}>
                 <Text style={styles.addToCartText}>RENT</Text>
             </Pressable>
         )
     }
 
+    // const navigation = useNavigation<StackNavigationProp<RootStaclParamList>>()
+    
     return (
         <ImageBackground source={require('../../assets/details_BG.png')} style={styles.imageBackground}>
             <ScrollView style={styles.scrollView}>
@@ -60,8 +67,15 @@ const CarDetails = ({route}: {route: any}) => {
                   {/* <Text style={[styles.itemPadding, styles.features]}>{item.features}</Text> */}
                   <View style={styles.rowView}>
                     <Text style={styles.cartPrice}>{item.price}</Text>
-                    <CartButton />
+                    {isAuthenticated ? 
+                        <CartButton /> :
+                        <TouchableOpacity onPress={() => navigation.navigate("SignIn")}>
+                                <Text>You need to be signed in to rent cars!</Text>
+                        </TouchableOpacity>
+                    }
                   </View>
+
+                  
 
 
                 </View>

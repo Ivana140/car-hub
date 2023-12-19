@@ -18,7 +18,7 @@ const CarItem = ({ item }: any) => {
     const binaryString = item.imageData.data.reduce((acc: any, byte: any) => acc + String.fromCharCode(byte), '');
     const base64String = btoa(binaryString);
     imageUri = `data:${item.imageData.type};base64,${base64String}`;
-    console.log(imageUri);
+    // console.log('IMAGE URI: ', imageUri);
   }
 
   const navigation = useNavigation<StackNavigationProp<RootStaclParamList>>()
