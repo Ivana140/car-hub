@@ -45,28 +45,34 @@ const StackNavigatorComponent: React.FC = () => {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
         <Stack.Screen
-          options={{
+          options={({ navigation }) => ({
             title: "Car Hub",
             headerTitleAlign: "center",
             headerStyle: {
               backgroundColor: colors.car_primary_color,
             },
-            headerLeft: () => (
-              <View>
-                <FontAwesome
-                  name="car"
-                  size={20}
-                  color="white"
-                  style={{ marginLeft: 15, fontFamily: "Helvetica Neue" }}
-                />
+            headerRight: () => (
+              <View style={{ marginRight: 10 }}>
+                <TouchableOpacity
+                  onPress={() => {
+                    isAuthenticated ? logout() : navigation.navigate("SignIn");
+                  }}
+                >
+                  {isAuthenticated ? (
+                    <Text style={{ color: "white" }}>Logout</Text>
+                  ) : (
+                    <Text style={{ color: "white" }}>Sign in</Text>
+                  )}
+                </TouchableOpacity>
               </View>
             ),
+
             headerTitleStyle: {
               fontFamily: "Helvetica Neue",
               fontSize: 18,
               color: "white",
             },
-          }}
+          })}
           name={"HomePage"}
           key={"HomePage"}
           component={HomePage}
@@ -96,17 +102,7 @@ const StackNavigatorComponent: React.FC = () => {
                 </TouchableOpacity>
               </View>
             ),
-            headerRight: () => (
-              <View style={{ marginRight: 10 }}>
-                <TouchableOpacity
-                  onPress={() => {
-                    isAuthenticated ? logout() : navigation.navigate("SignIn");
-                  }}
-                >
-                  {isAuthenticated ? <Text>Logout</Text> : <Text>Sign in</Text>}
-                </TouchableOpacity>
-              </View>
-            ),
+
             headerTitleStyle: {
               fontFamily: "Helvetica Neue",
               fontSize: 18,

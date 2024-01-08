@@ -28,13 +28,15 @@ function RentOut() {
 
   const handleSubmit = async () => {
     const formData = new FormData();
-    formData.append("name", name);
+    formData.append("model", name);
     formData.append("class", carClass);
-    formData.append("cmpg", cmpg);
+    formData.append("combination_mpg", cmpg);
+    formData.append("fuel_type", fuelType);
+    formData.append("transmission", transmission);
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/upload-cars",
+        "http://10.0.2.2:3000/upload-cars",
         formData,
         {
           headers: {
